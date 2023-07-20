@@ -18,7 +18,7 @@ node{
     stage('git code checkout'){
         try{
             echo 'checkout the code from git repository'
-            git 'https://github.com/StaragileDevops/insuredemo.git'
+            git 'https://github.com/romanazaidi/insurance.git'
         }
         catch(Exception e){
             echo 'Exception occured in Git Code Checkout Stage'
@@ -41,14 +41,14 @@ node{
     
     stage('Containerize the application'){
         echo 'Creating Docker image'
-        sh "${dockerCMD} build -t staragiledevops/insdemo:${tagName} ."
+        sh "${dockerCMD} build -t romanazaidi/ins:${tagName} ."
     }
     
     stage('Pushing it to the DockerHub'){
         echo 'Pushing the docker image to DockerHub'
-        withCredentials([string(credentialsId: 'dockPassword', variable: 'dockpaswd')]) {
-        sh "${dockerCMD} login -u staragiledevops -p ${dockpaswd}"
-        sh "${dockerCMD} push staragiledevops/insdemo:${tagName}"
+        withCredentials([string(credentialsId: 'Dock', variable: 'dockpswd')]) {
+        sh "${dockerCMD} login -u romanazaidi -p ${dockpaswd}"
+        sh "${dockerCMD} push romanazaidi/ins:${tagName}"
         }    
         }
         
